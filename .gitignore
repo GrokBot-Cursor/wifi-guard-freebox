@@ -1,0 +1,19 @@
+# Donnees locales, etat et jetons : ne jamais publier
+.env
+*.env
+!.env.example
+data/
+/data/
+state.json
+config.json
+app_token*.json
+*.token
+outbox/
+backup/
+*.bak
+*.log
+inactifs*.json
+
+# Python
+__pycache__/
+*.pyc

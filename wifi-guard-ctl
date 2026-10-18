@@ -1,0 +1,8 @@
+#!/bin/sh
+# Pilote le conteneur WiFi Guard. Exemples :
+#   ./wifi-guard-ctl status
+#   ./wifi-guard-ctl allow <MAC> "nom de l'appareil"
+# Variable optionnelle : WG_CONTAINER (defaut wifi-guard)
+C="${WG_CONTAINER:-wifi-guard}"
+if [ -t 0 ]; then T="-it"; else T="-i"; fi
+exec docker exec $T "$C" python /app/wifi_guard.py "$@"

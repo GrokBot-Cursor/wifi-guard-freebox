@@ -1,0 +1,45 @@
+# Stack docker compose / Portainer ("Stacks" > "Add stack" > Repository ou Web editor).
+# Les variables ${...} sont lues dans le fichier .env (docker compose) ou dans les
+# "Environment variables" de la stack (Portainer). Voir .env.example.
+services:
+  wifi-guard:
+    build: .
+    image: wifi-guard:latest
+    container_name: wifi-guard
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      TZ: ${TZ:-Europe/Paris}
+      WG_DATA: /data
+      FBX_URL: ${FBX_URL:-http://mafreebox.freebox.fr}
+      FBX_INSECURE: ${FBX_INSECURE:-0}
+      WG_APP_ID: ${WG_APP_ID:-fr.example.wifiguard}
+      WG_APP_NAME: ${WG_APP_NAME:-WiFi Guard}
+      WG_DEVICE_NAME: ${WG_DEVICE_NAME:-wifi-guard}
+      WG_INTERVAL: ${WG_INTERVAL:-60}
+      WG_LEARN_MINUTES: ${WG_LEARN_MINUTES:-10}
+      WG_BLOCK: ${WG_BLOCK:-off}            # valeur initiale seulement ; ensuite `wifi-guard-ctl block on|off`
+      WG_PROTECT_IPS: ${WG_PROTECT_IPS:-}
+      WG_PROTECT_MACS: ${WG_PROTECT_MACS:-}
+      WG_SMTP_HOST: ${WG_SMTP_HOST:-}
+      WG_SMTP_PORT: ${WG_SMTP_PORT:-}
+      WG_SMTP_SECURITY: ${WG_SMTP_SECURITY:-starttls}
+      WG_SMTP_USER: ${WG_SMTP_USER:-}
+      WG_SMTP_PASSWORD: ${WG_SMTP_PASSWORD:-}
+      WG_MAIL_FROM: ${WG_MAIL_FROM:-}
+      WG_MAIL_TO: ${WG_MAIL_TO:-}
+      WG_WEBHOOK_URL: ${WG_WEBHOOK_URL:-}
+      WG_WEBHOOK_AUTH: ${WG_WEBHOOK_AUTH:-}
+    volumes:
+      - wifi-guard-data:/data
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 128m
+    logging:
+      driver: json-file
+      options: {max-size: "2m", max-file: "3"}
+
+volumes:
+  wifi-guard-data:
