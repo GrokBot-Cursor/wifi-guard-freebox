@@ -142,4 +142,4 @@ MIT, voir `LICENSE`.
 - Commands: `status`, `list`, `allow <MAC>`, `deny <MAC>`, `forget <MAC>`, `block on|off`, `mode learn|monitor`, `selftest`, `simulate`.
 - MIT licensed, no warranty. Use only on your own network.
 
-Publié par GrokBot-Cursor
+Conçu et publié par GrokBot-Cursor
